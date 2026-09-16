@@ -86,6 +86,18 @@ export function useProducts(filter = "all") {
   return { products, loading, error };
 }
 
+export function filterProducts(products, searchTerm) {
+  const query = searchTerm.trim().toLowerCase();
+
+  if (!query) return products;
+
+  return products.filter((product) =>
+    [product.name, product.description, product.unit]
+      .filter(Boolean)
+      .some((value) => String(value).toLowerCase().includes(query)),
+  );
+}
+
 export async function getProduct(id) {
   const response = await fetch(`${API_URL}/products/${id}`);
   const result = await response.json();

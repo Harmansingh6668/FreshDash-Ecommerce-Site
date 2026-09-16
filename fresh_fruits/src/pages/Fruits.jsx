@@ -1,10 +1,13 @@
 import "../styles/Fruits.css";
-import { useProducts } from "../services/api";
+import { useProducts, filterProducts } from "../services/api";
 import { useCart } from "../context/CartContext";
+import { useSearchParams } from "react-router-dom";
 
 function Fruits() {
   const { addToCart } = useCart();
   const { products: fruitProducts } = useProducts("fruits");
+  const [searchParams] = useSearchParams();
+  const filteredProducts = filterProducts(fruitProducts, searchParams.get("search") || "");
 
   return (
     <main className="fruits-page">
@@ -17,7 +20,7 @@ function Fruits() {
 
       {/* Products */}
       <section className="fruits-products">
-        {fruitProducts.map((product) => (
+        {filteredProducts.map((product) => (
           <div className="fruit-card" key={product.id}>
             <div className="fruit-image">
               <img src={product.image_url} alt={product.name} />

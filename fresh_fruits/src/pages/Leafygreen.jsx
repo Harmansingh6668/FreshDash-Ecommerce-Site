@@ -1,10 +1,13 @@
 import "../styles/Fruits.css";
-import { useProducts } from "../services/api";
+import { useProducts, filterProducts } from "../services/api";
 import { useCart } from "../context/CartContext";
+import { useSearchParams } from "react-router-dom";
 
 function Leafygreen() {
   const { addToCart } = useCart();
   const { products: leafyProducts } = useProducts("leafy_greens");
+  const [searchParams] = useSearchParams();
+  const filteredProducts = filterProducts(leafyProducts, searchParams.get("search") || "");
 
   return (
     <main className="fruits-page">
@@ -15,7 +18,7 @@ function Leafygreen() {
 
       <section className="fruits-products">
 
-          {leafyProducts.map((product) => (
+          {filteredProducts.map((product) => (
             <div className="fruit-card" key={product.id}>
               <div className="fruit-image">
                 <img src={product.image_url} alt={product.name} />
