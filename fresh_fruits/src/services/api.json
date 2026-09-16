@@ -1,0 +1,287 @@
+{
+  "api_version": "1.0",
+  "endpoint": "/api/produce",
+  "generated_at": "2026-09-11",
+  "total_items": 17,
+  "products": [
+    {
+      "id": "spinach-001",
+      "name": "Baby Spinach",
+      "category": "leafy_greens",
+      "tags": [
+        "leafy_greens",
+        "organic"
+      ],
+      "organic": true,
+      "unit": "bunch",
+      "currency": "USD",
+      "price": 2.49,
+      "discount_percent": 15,
+      "discounted_price": 2.12,
+      "in_stock": true,
+      "image_url": "https://loremflickr.com/500/500/spinach"
+    },
+    {
+      "id": "kale-002",
+      "name": "Curly Kale",
+      "category": "leafy_greens",
+      "tags": [
+        "leafy_greens",
+        "organic"
+      ],
+      "organic": true,
+      "unit": "bunch",
+      "currency": "USD",
+      "price": 2.99,
+      "discount_percent": 10,
+      "discounted_price": 2.69,
+      "in_stock": true,
+      "image_url": "https://loremflickr.com/500/500/kale"
+    },
+    {
+      "id": "romaine-003",
+      "name": "Romaine Lettuce",
+      "category": "leafy_greens",
+      "tags": [
+        "leafy_greens"
+      ],
+      "organic": false,
+      "unit": "each",
+      "currency": "USD",
+      "price": 1.99,
+      "discount_percent": 0,
+      "discounted_price": 1.99,
+      "in_stock": true,
+      "image_url": "https://loremflickr.com/500/500/romaine-lettuce"
+    },
+    {
+      "id": "chard-004",
+      "name": "Swiss Chard",
+      "category": "leafy_greens",
+      "tags": [
+        "leafy_greens",
+        "organic"
+      ],
+      "organic": true,
+      "unit": "bunch",
+      "currency": "USD",
+      "price": 3.29,
+      "discount_percent": 20,
+      "discounted_price": 2.63,
+      "in_stock": true,
+      "image_url": "https://loremflickr.com/500/500/swiss-chard"
+    },
+    {
+      "id": "arugula-005",
+      "name": "Arugula",
+      "category": "leafy_greens",
+      "tags": [
+        "leafy_greens"
+      ],
+      "organic": false,
+      "unit": "box",
+      "currency": "USD",
+      "price": 2.79,
+      "discount_percent": 0,
+      "discounted_price": 2.79,
+      "in_stock": true,
+      "image_url": "https://loremflickr.com/500/500/arugula"
+    },
+    {
+      "id": "bokchoy-006",
+      "name": "Bok Choy",
+      "category": "leafy_greens",
+      "tags": [
+        "leafy_greens"
+      ],
+      "organic": false,
+      "unit": "lb",
+      "currency": "USD",
+      "price": 2.19,
+      "discount_percent": 5,
+      "discounted_price": 2.08,
+      "in_stock": true,
+      "image_url": "https://loremflickr.com/500/500/bok-choy"
+    },
+    {
+      "id": "apple-007",
+      "name": "Organic Gala Apples",
+      "category": "fruits",
+      "tags": [
+        "fruits",
+        "organic"
+      ],
+      "organic": true,
+      "unit": "lb",
+      "currency": "USD",
+      "price": 4.49,
+      "discount_percent": 10,
+      "discounted_price": 4.04,
+      "in_stock": true,
+      "image_url": "https://loremflickr.com/500/500/gala-apple"
+    },
+    {
+      "id": "banana-008",
+      "name": "Organic Bananas",
+      "category": "fruits",
+      "tags": [
+        "fruits",
+        "organic"
+      ],
+      "organic": true,
+      "unit": "lb",
+      "currency": "USD",
+      "price": 1.29,
+      "discount_percent": 0,
+      "discounted_price": 1.29,
+      "in_stock": true,
+      "image_url": "https://loremflickr.com/500/500/banana"
+    },
+    {
+      "id": "strawberry-009",
+      "name": "Organic Strawberries",
+      "category": "fruits",
+      "tags": [
+        "fruits",
+        "organic"
+      ],
+      "organic": true,
+      "unit": "box",
+      "currency": "USD",
+      "price": 5.99,
+      "discount_percent": 25,
+      "discounted_price": 4.49,
+      "in_stock": true,
+      "image_url": "https://loremflickr.com/500/500/strawberry"
+    },
+    {
+      "id": "carrot-010",
+      "name": "Carrots",
+      "category": "vegetables",
+      "tags": [
+        "vegetables"
+      ],
+      "organic": false,
+      "unit": "bunch",
+      "currency": "USD",
+      "price": 1.79,
+      "discount_percent": 0,
+      "discounted_price": 1.79,
+      "in_stock": true,
+      "image_url": "https://loremflickr.com/500/500/carrot"
+    },
+    {
+      "id": "tomato-011",
+      "name": "Roma Tomatoes",
+      "category": "vegetables",
+      "tags": [
+        "vegetables"
+      ],
+      "organic": false,
+      "unit": "lb",
+      "currency": "USD",
+      "price": 2.49,
+      "discount_percent": 15,
+      "discounted_price": 2.12,
+      "in_stock": true,
+      "image_url": "https://loremflickr.com/500/500/roma-tomato"
+    },
+    {
+      "id": "pepper-012",
+      "name": "Tri-Colour Bell Peppers",
+      "category": "vegetables",
+      "tags": [
+        "vegetables"
+      ],
+      "organic": false,
+      "unit": "pack",
+      "currency": "USD",
+      "price": 3.99,
+      "discount_percent": 0,
+      "discounted_price": 3.99,
+      "in_stock": true,
+      "image_url": "https://loremflickr.com/500/500/bell-pepper"
+    },
+    {
+      "id": "broccoli-013",
+      "name": "Broccoli Crowns",
+      "category": "vegetables",
+      "tags": [
+        "vegetables",
+        "organic"
+      ],
+      "organic": true,
+      "unit": "each",
+      "currency": "USD",
+      "price": 2.99,
+      "discount_percent": 10,
+      "discounted_price": 2.69,
+      "in_stock": true,
+      "image_url": "https://loremflickr.com/500/500/broccoli"
+    },
+    {
+      "id": "orange-014",
+      "name": "Navel Oranges",
+      "category": "fruits",
+      "tags": [
+        "fruits"
+      ],
+      "organic": false,
+      "unit": "lb",
+      "currency": "USD",
+      "price": 3.49,
+      "discount_percent": 0,
+      "discounted_price": 3.49,
+      "in_stock": true,
+      "image_url": "https://loremflickr.com/500/500/orange-fruit"
+    },
+    {
+      "id": "grapes-015",
+      "name": "Red Seedless Grapes",
+      "category": "fruits",
+      "tags": [
+        "fruits"
+      ],
+      "organic": false,
+      "unit": "lb",
+      "currency": "USD",
+      "price": 4.29,
+      "discount_percent": 20,
+      "discounted_price": 3.43,
+      "in_stock": true,
+      "image_url": "https://loremflickr.com/500/500/red-grapes"
+    },
+    {
+      "id": "mango-016",
+      "name": "Mango",
+      "category": "fruits",
+      "tags": [
+        "fruits"
+      ],
+      "organic": false,
+      "unit": "each",
+      "currency": "USD",
+      "price": 1.99,
+      "discount_percent": 0,
+      "discounted_price": 1.99,
+      "in_stock": true,
+      "image_url": "https://loremflickr.com/500/500/mango"
+    },
+    {
+      "id": "watermelon-017",
+      "name": "Watermelon",
+      "category": "fruits",
+      "tags": [
+        "fruits"
+      ],
+      "organic": false,
+      "unit": "whole",
+      "currency": "USD",
+      "price": 6.99,
+      "discount_percent": 15,
+      "discounted_price": 5.94,
+      "in_stock": true,
+      "image_url": "https://loremflickr.com/500/500/watermelon"
+    }
+  ]
+}

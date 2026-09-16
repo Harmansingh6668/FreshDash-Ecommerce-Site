@@ -1,0 +1,138 @@
+.fruits-page {
+  min-height: 70vh;
+}
+
+/* Page Header */
+
+.fruits-header {
+  padding: 50px 8%;
+  text-align: center;
+  background: #f1f8e9;
+}
+
+.fruits-header h1 {
+  font-size: 42px;
+  color: #2e7d32;
+  margin-bottom: 10px;
+}
+
+.fruits-header p {
+  color: #666;
+  font-size: 17px;
+}
+
+/* Product Section */
+
+.fruits-products {
+  max-width: 1200px;
+  margin: auto;
+  padding: 50px 30px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+
+/* Fruit Card */
+
+.fruit-card {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 20px;
+
+  text-align: center;
+
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+
+  transition: 0.3s;
+}
+
+.fruit-card:hover {
+  transform: translateY(-5px);
+}
+
+.fruit-image {
+  height: 180px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 90px;
+
+  background: #f8f8f8;
+  border-radius: 8px;
+}
+
+.fruit-card h3 {
+  margin-top: 15px;
+  font-size: 19px;
+}
+
+.fruit-card p {
+  color: #2e7d32;
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.fruit-card button {
+  width: 100%;
+  margin-top: 15px;
+
+  padding: 11px;
+
+  border: none;
+  border-radius: 6px;
+
+  background: #2e7d32;
+  color: white;
+
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.fruit-card button:hover {
+  background: #1b5e20;
+}
+
+/* Tablet */
+
+@media (max-width: 900px) {
+  .fruits-products {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 650px) {
+  .fruits-products {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 450px) {
+  .fruits-products {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Fresh card redesign */
+.fruits-page { background: #fffaf5; color: #2d2925; }
+.fruits-header { padding: clamp(58px, 8vw, 104px) 24px 76px; background: radial-gradient(circle at 50% 0%, #fff0d9 0, #fffaf5 58%); border-bottom: 1px solid #f2dfc7; }
+.fruits-header h1 { margin: 0 0 12px; color: #a84b2f; font-family: Georgia, serif; font-size: clamp(2.5rem, 6vw, 5rem); line-height: .98; letter-spacing: -0.03em; }
+.fruits-header p { max-width: 520px; margin: 0 auto; color: #826f61; line-height: 1.7; }
+.fruits-products { max-width: 1280px; padding: 52px 32px 88px; gap: 24px; }
+.fruit-card { display: flex; min-width: 0; flex-direction: column; padding: 12px 12px 18px; overflow: hidden; background: #fff; border: 1px solid #f1e4d7; border-radius: 20px; box-shadow: 0 10px 26px rgba(110,67,34,.07); transition: transform 180ms ease, box-shadow 180ms ease; }
+.fruit-card:hover { transform: translateY(-7px); box-shadow: 0 18px 34px rgba(110,67,34,.14); }
+.fruit-image { height: 205px; overflow: hidden; border-radius: 14px; background: #fff2df; }
+.fruit-image img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform 350ms ease; }
+.fruit-card:hover .fruit-image img { transform: scale(1.06); }
+.fruit-card h3 { margin: 18px 8px 5px; color: #332a24; font-size: 1.1rem; }
+.fruit-card p { margin: 0 8px; color: #bd5c32; font-size: 1rem; font-weight: 800; }
+.fruit-card button { width: calc(100% - 16px); margin: 18px 8px 0; padding: 12px 14px; border: 0; border-radius: 10px; background: #28683d; color: #fff; font-weight: 700; }
+.fruit-card button:hover { background: #1e4f2f; }
+@media (max-width: 980px) { .fruits-products { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 680px) { .fruits-products { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 32px 18px 60px; gap: 16px; } .fruit-image { height: 160px; } }
+@media (max-width: 440px) { .fruits-products { grid-template-columns: 1fr; } .fruit-image { height: 210px; } }

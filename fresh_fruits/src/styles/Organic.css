@@ -1,0 +1,408 @@
+
+/* MAIN PAGE */
+
+.organic-page {
+  width: 100%;
+  min-height: 70vh;
+}
+
+
+/* =========================
+   HERO SECTION
+========================= */
+
+.organic-hero {
+  min-height: 400px;
+  padding: 50px 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f1f8e9;
+}
+
+.organic-hero-content {
+  max-width: 600px;
+}
+
+.small-title {
+  color: #558b2f;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.organic-hero h1 {
+  color: #2e7d32;
+  font-size: 48px;
+  line-height: 1.2;
+  margin: 10px 0 20px;
+}
+
+.organic-hero p {
+  color: #555;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.organic-hero button {
+  margin-top: 25px;
+  padding: 13px 25px;
+  border: none;
+  border-radius: 6px;
+  background: #2e7d32;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.organic-hero button:hover {
+  background: #1b5e20;
+}
+
+.organic-hero-image {
+  font-size: 75px;
+  letter-spacing: 8px;
+}
+
+
+/* =========================
+   ORGANIC CATEGORIES
+========================= */
+
+.organic-categories {
+  max-width: 1200px;
+  margin: auto;
+  padding: 55px 30px;
+  text-align: center;
+}
+
+.organic-categories h2 {
+  color: #222;
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.section-description {
+  color: #777;
+  font-size: 16px;
+  margin-bottom: 35px;
+}
+
+
+/* CATEGORY GRID */
+
+.organic-category-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+
+
+/* CATEGORY CARD */
+
+.organic-category-card {
+  padding: 25px 20px;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
+}
+
+.organic-category-card:hover {
+  transform: translateY(-5px);
+}
+
+.organic-category-image {
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f8f8;
+  border-radius: 8px;
+  font-size: 70px;
+}
+
+.organic-category-card h3 {
+  margin-top: 15px;
+  color: #333;
+  font-size: 19px;
+}
+
+.organic-category-card p {
+  margin-top: 8px;
+  color: #777;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
+/* =========================
+   PRODUCTS SECTION
+========================= */
+
+.organic-products-section {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px 30px 70px;
+}
+
+.organic-products-section h2 {
+  text-align: center;
+  color: #222;
+  font-size: 32px;
+  margin-bottom: 35px;
+}
+
+
+/* PRODUCT GRID */
+
+.organic-products {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+
+
+/* PRODUCT CARD */
+
+.organic-card {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
+}
+
+.organic-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+}
+
+
+/* PRODUCT IMAGE */
+
+.organic-image {
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f8f8;
+  border-radius: 8px;
+  font-size: 90px;
+}
+
+
+/* PRODUCT NAME */
+
+.organic-card h3 {
+  margin-top: 15px;
+  color: #333;
+  font-size: 19px;
+}
+
+
+/* PRODUCT PRICE */
+
+.organic-card p {
+  margin-top: 8px;
+  color: #2e7d32;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+
+/* ADD TO CART */
+
+.organic-card button {
+  width: 100%;
+  margin-top: 15px;
+  padding: 11px;
+  border: none;
+  border-radius: 6px;
+  background: #2e7d32;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.organic-card button:hover {
+  background: #1b5e20;
+}
+
+
+/* =========================
+   WHY ORGANIC
+========================= */
+
+.why-organic {
+  padding: 60px 8%;
+  background: #f1f8e9;
+  text-align: center;
+}
+
+.why-organic h2 {
+  color: #2e7d32;
+  font-size: 32px;
+  margin-bottom: 35px;
+}
+
+
+/* BENEFITS */
+
+.organic-benefits {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.organic-benefits > div {
+  background: white;
+  padding: 30px 25px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
+}
+
+.organic-benefits span {
+  display: block;
+  font-size: 45px;
+  margin-bottom: 15px;
+}
+
+.organic-benefits h3 {
+  color: #333;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.organic-benefits p {
+  color: #777;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+  .organic-category-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .organic-products {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .organic-hero-image {
+    font-size: 55px;
+  }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 650px) {
+
+  .organic-hero {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+    padding: 45px 25px;
+  }
+
+  .organic-hero h1 {
+    font-size: 38px;
+  }
+
+  .organic-hero p {
+    font-size: 15px;
+  }
+
+  .organic-hero-image {
+    font-size: 45px;
+  }
+
+  .organic-category-list {
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+
+  .organic-products {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 0 10px;
+  }
+
+  .organic-products-section {
+    padding: 20px 15px 50px;
+  }
+
+  .organic-benefits {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 450px) {
+
+  .organic-category-list {
+    grid-template-columns: 1fr;
+  }
+
+  .organic-products {
+    grid-template-columns: 1fr;
+  }
+
+  .organic-categories h2,
+  .organic-products-section h2,
+  .why-organic h2 {
+    font-size: 27px;
+  }
+
+  .organic-hero h1 {
+    font-size: 32px;
+  }
+
+}
+
+/* Fresh card redesign */
+.organic-page { background: #fcfaf2; }
+.organic-hero { min-height: 390px; padding: 72px max(24px, 8vw); background: radial-gradient(circle at 82% 18%, #efe8bf 0, #fcfaf2 52%); }
+.organic-hero h1 { font-family: Georgia, serif; font-size: clamp(2.6rem, 5vw, 5rem); letter-spacing: -0.03em; }
+.organic-hero-image { min-width: 270px; min-height: 270px; border-radius: 50%; background: rgba(255,255,255,.58); box-shadow: 0 20px 50px rgba(96,87,38,.1); }
+.organic-categories, .organic-products-section { max-width: 1280px; padding-right: 32px; padding-left: 32px; }
+.organic-categories h2, .organic-products-section h2, .why-organic h2 { font-family: Georgia, serif; }
+.organic-category-card { padding: 10px 10px 18px; border-radius: 18px; box-shadow: 0 8px 22px rgba(88,82,37,.06); }
+.organic-category-card:hover { transform: translateY(-5px); }
+.organic-category-image { height: 126px; border-radius: 13px; background: #f2f2df; }
+.organic-products-section { padding-top: 46px; padding-bottom: 88px; }
+.organic-products { gap: 22px; }
+.organic-card { padding: 12px 12px 18px; border-radius: 18px; box-shadow: 0 10px 26px rgba(88,82,37,.07); transition: transform 180ms ease, box-shadow 180ms ease; }
+.organic-card:hover { transform: translateY(-6px); box-shadow: 0 18px 34px rgba(88,82,37,.13); }
+.organic-image { height: 190px; overflow: hidden; border-radius: 13px; background: #f2f2df; }
+.organic-image img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform 350ms ease; }
+.organic-card:hover .organic-image img { transform: scale(1.06); }
+.organic-card h3 { margin: 17px 8px 6px; }
+.organic-card p { margin: 0 8px; color: #687b32; }
+.organic-card button { width: calc(100% - 16px); margin: 17px 8px 0; border-radius: 10px; background: #687b32; }
+.organic-card button:hover { background: #4d5f24; }
+.why-organic { background: #f1f0dc; }
+.organic-benefits > div { border-radius: 16px; }
+@media (max-width: 680px) { .organic-hero { padding: 58px 24px; } .organic-hero-image { min-width: 210px; min-height: 210px; } .organic-categories, .organic-products-section { padding-right: 18px; padding-left: 18px; } .organic-products-section { padding-bottom: 60px; } .organic-image { height: 155px; } }
+@media (max-width: 440px) { .organic-image { height: 210px; } }
+

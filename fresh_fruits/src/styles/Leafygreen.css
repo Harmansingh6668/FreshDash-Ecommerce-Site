@@ -1,0 +1,233 @@
+
+.leafy-page {
+  width: 100%;
+  min-height: 70vh;
+}
+
+/* HERO SECTION */
+
+.leafy-hero {
+  min-height: 380px;
+  padding: 50px 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f1f8e9;
+}
+
+.leafy-hero-content {
+  max-width: 600px;
+}
+
+.small-title {
+  color: #558b2f;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.leafy-hero h1 {
+  color: #2e7d32;
+  font-size: 48px;
+  margin: 10px 0 15px;
+}
+
+.leafy-hero p {
+  color: #555;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.leafy-hero button {
+  margin-top: 25px;
+  padding: 13px 25px;
+  border: none;
+  border-radius: 6px;
+  background: #2e7d32;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.leafy-hero button:hover {
+  background: #1b5e20;
+}
+
+.leafy-hero-image {
+  font-size: 80px;
+  letter-spacing: 10px;
+}
+
+
+/* PRODUCT SECTION */
+
+.leafy-section {
+  max-width: 1200px;
+  margin: auto;
+  padding: 50px 30px 70px;
+  text-align: center;
+}
+
+.leafy-section h2 {
+  font-size: 32px;
+  color: #222;
+  margin-bottom: 10px;
+}
+
+.section-description {
+  color: #777;
+  font-size: 16px;
+  margin-bottom: 35px;
+}
+
+
+/* PRODUCT GRID */
+
+.leafy-products {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+
+
+/* PRODUCT CARD */
+
+.leafy-card {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
+}
+
+.leafy-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+}
+
+
+/* PRODUCT IMAGE */
+
+.leafy-image {
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 90px;
+  background: #f8f8f8;
+  border-radius: 8px;
+}
+
+
+/* PRODUCT NAME */
+
+.leafy-card h3 {
+  margin-top: 15px;
+  font-size: 19px;
+  color: #333;
+}
+
+
+/* PRICE */
+
+.leafy-card p {
+  margin-top: 8px;
+  color: #2e7d32;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+
+/* ADD TO CART BUTTON */
+
+.leafy-card button {
+  width: 100%;
+  margin-top: 15px;
+  padding: 11px;
+  border: none;
+  border-radius: 6px;
+  background: #2e7d32;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.leafy-card button:hover {
+  background: #1b5e20;
+}
+
+
+/* TABLET */
+
+@media (max-width: 900px) {
+
+  .leafy-products {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .leafy-hero-image {
+    font-size: 60px;
+  }
+}
+
+
+/* MOBILE */
+
+@media (max-width: 650px) {
+
+  .leafy-hero {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .leafy-hero h1 {
+    font-size: 38px;
+  }
+
+  .leafy-products {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 10px;
+  }
+}
+
+
+/* SMALL MOBILE */
+
+@media (max-width: 450px) {
+
+  .leafy-products {
+    grid-template-columns: 1fr;
+  }
+
+  .leafy-hero-image {
+    font-size: 50px;
+  }
+
+  .leafy-section {
+    padding: 40px 20px;
+  }
+}
+
+/* Fresh card redesign */
+.leafy-page { background: #f4f7f0; }
+.leafy-hero { min-height: 390px; padding: 72px max(24px, 8vw); background: radial-gradient(circle at 82% 18%, #dceec7 0, #f4f7f0 52%); }
+.leafy-hero h1 { font-family: Georgia, serif; font-size: clamp(2.6rem, 5vw, 5rem); letter-spacing: -0.03em; }
+.leafy-hero-image { min-width: 270px; min-height: 270px; border-radius: 50%; background: rgba(255,255,255,.58); box-shadow: 0 20px 50px rgba(56,101,49,.1); }
+.leafy-section { max-width: 1280px; padding: 58px 32px 88px; }
+.leafy-section h2 { font-family: Georgia, serif; }
+.leafy-products { gap: 22px; }
+.leafy-card { padding: 12px 12px 18px; border-radius: 18px; box-shadow: 0 10px 26px rgba(42,74,48,.07); transition: transform 180ms ease, box-shadow 180ms ease; }
+.leafy-card:hover { transform: translateY(-6px); box-shadow: 0 18px 34px rgba(42,74,48,.13); }
+.leafy-image { height: 190px; overflow: hidden; border-radius: 13px; background: #eaf4e5; }
+.leafy-image img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform 350ms ease; }
+.leafy-card:hover .leafy-image img { transform: scale(1.06); }
+.leafy-card h3 { margin: 17px 8px 6px; }
+.leafy-card p { margin: 0 8px; color: #4e7d42; }
+.leafy-card button { width: calc(100% - 16px); margin: 17px 8px 0; border-radius: 10px; background: #4e7d42; }
+.leafy-card button:hover { background: #385e31; }
+@media (max-width: 680px) { .leafy-hero { padding: 58px 24px; } .leafy-hero-image { min-width: 210px; min-height: 210px; } .leafy-section { padding: 44px 18px 60px; } .leafy-products { gap: 16px; } .leafy-image { height: 155px; } }
+@media (max-width: 440px) { .leafy-image { height: 210px; } }
+
