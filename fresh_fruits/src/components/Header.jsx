@@ -6,6 +6,7 @@ import { useCart } from "../context/CartContext";
 function Header() {
 
     const [showCategories, setShowCategories] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
     const { cart } = useCart();
   const navigate = useNavigate();
   const location = useLocation();
@@ -37,23 +38,14 @@ function Header() {
     };
   }, []);
 
-  const searchTerm = new URLSearchParams(location.search).get("search") || "";
-
-  const updateSearch = (value) => {
-    const params = new URLSearchParams(location.search);
-
-    if (value.trim()) {
-      params.set("search", value);
-    } else {
-      params.delete("search");
-    }
-
-    const query = params.toString();
-    navigate(`${location.pathname}${query ? `?${query}` : ""}`, { replace: true });
-  };
+  useEffect(() => {
+    setSearchTerm(new URLSearchParams(location.search).get("search") || "");
+  }, [location.search]);
 
   const handleSearch = (event) => {
     event.preventDefault();
+    const query = searchTerm.trim();
+    navigate(query ? `/?search=${encodeURIComponent(query)}` : "/");
   };
 
   return (
@@ -154,7 +146,7 @@ function Header() {
             placeholder="Search fruits, vegetables..."
             aria-label="Search products"
             value={searchTerm}
-            onChange={(event) => updateSearch(event.target.value)}
+            onChange={(event) => setSearchTerm(event.target.value)}
           />
           <button type="submit" aria-label="Search">🔍</button>
         </form>
