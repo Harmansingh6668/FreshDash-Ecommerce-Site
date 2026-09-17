@@ -13,12 +13,19 @@ const path = require("path");
 
 const app = express();
 
+const allowedOrigins = [process.env.CLIENT_URL, process.env.ADMIN_URL]
+  .flatMap((value) => String(value || "").split(","))
+  .map((value) => value.trim())
+  .filter(Boolean);
+
 app.use(
   cors({
-    origin: [
-      process.env.CLIENT_URL,
-      process.env.ADMIN_URL,
-    ],
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin) || /^https:\/\/[^/]+\.vercel\.app$/.test(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error("Origin is not allowed by CORS"));
+    },
     credentials: true,
   })
 );

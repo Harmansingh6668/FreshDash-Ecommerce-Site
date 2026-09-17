@@ -1,4 +1,7 @@
-const API_URL = "http://localhost:5000/api";
+const configuredApiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_URL = configuredApiUrl.replace(/\/$/, "").endsWith("/api")
+  ? configuredApiUrl.replace(/\/$/, "")
+  : `${configuredApiUrl.replace(/\/$/, "")}/api`;
 
 async function request(path, options = {}) {
   const response = await fetch(`${API_URL}${path}`, {
@@ -32,7 +35,7 @@ export const createProduct = (product) => request("/products", { method: "POST",
 export async function uploadProductImage(file) {
   const formData = new FormData();
   formData.append("image", file);
-  const response = await fetch("http://localhost:5000/api/uploads/product-image", {
+  const response = await fetch(`${API_URL}/uploads/product-image`, {
     method: "POST",
     credentials: "include",
     body: formData,
