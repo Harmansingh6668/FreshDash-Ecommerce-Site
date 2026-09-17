@@ -1,10 +1,13 @@
 
 import "../styles/Offers.css";
+import { useSearchParams } from "react-router-dom";
 import { useProducts } from "../services/api";
 import { useCart } from "../context/CartContext";
 
 function Offers() {
-  const { products: offers, loading, error } = useProducts("offers");
+  const [searchParams] = useSearchParams();
+  const searchTerm = searchParams.get("search") || "";
+  const { products: offers, loading, error } = useProducts("offers", searchTerm);
   const { addToCart } = useCart();
   /*
   const offers = [

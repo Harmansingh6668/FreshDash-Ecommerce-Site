@@ -6,6 +6,7 @@ import Fruits from "./pages/Fruits";
 import Vegetables from "./pages/Vegetables";
 import Leafygreen from "./pages/Leafygreen";
 import Offers from "./pages/Offers";
+import BestSellers from "./pages/BestSellers";
 
 import Organic from "./pages/Organic";
 import ProductDetails from  "./pages/ProductDetails";
@@ -68,6 +69,7 @@ function App() {
             <Route path="/Leafygreen" element={<Leafygreen/>}></Route>
             <Route path="/Organic" element={<Organic/>}></Route>
             <Route path="/offers" element={<Offers/>}></Route>
+            <Route path="/best-sellers" element={<BestSellers/>}></Route>
             <Route path="/products/:id" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart />} />
 

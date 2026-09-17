@@ -1,5 +1,6 @@
 
 import "../styles/Home.css";
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import { useProducts } from "../services/api";
@@ -10,7 +11,10 @@ function Home() {
   const searchTerm = searchParams.get("search")?.trim().toLowerCase() || "";
   const { products } = useProducts("all", searchTerm);
   const { addToCart } = useCart();
-  const featuredProducts = products.slice(0, 20);
+  const featuredProducts = useMemo(
+    () => [...products].sort(() => Math.random() - 0.5).slice(0, 20),
+    [products],
+  );
 
   return (
     <main className="home">

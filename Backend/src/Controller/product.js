@@ -1,6 +1,9 @@
 const Product = require("../models/Product");
 const Category = require("../models/Category");
+const Order = require("../models/Order");
 const mongoose = require("mongoose");
+
+const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 const resolveCategoryId = async (value) => {
   const categoryValue = String(value || "").trim();
@@ -79,7 +82,20 @@ const listProducts = async (req, res) => {
     if (req.query.organic === "true") filter.organic = true;
     if (req.query.featured === "true") filter.featured = true;
     if (req.query.offers === "true") filter.discountPrice = { $exists: true, $gt: 0 };
-    if (req.query.search) filter.$text = { $search: String(req.query.search).trim() };
+    if (req.query.search) {
+      const searchWords = String(req.query.search)
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean)
+        .map(escapeRegex);
+
+      filter.$and = searchWords.map((word) => ({
+        $or: [
+          { name: { $regex: word, $options: "i" } },
+          { description: { $regex: word, $options: "i" } },
+        ],
+      }));
+    }
 
     const limit = Math.min(Math.max(Number.parseInt(req.query.limit, 10) || 24, 1), 100);
     const skip = Math.max(Number.parseInt(req.query.skip, 10) || 0, 0);
@@ -100,6 +116,46 @@ const listProducts = async (req, res) => {
     res.json({ success: true, products });
   } catch (error) {
     res.status(500).json({ success: false, message: "Failed to fetch products" });
+  }
+};
+
+const listBestSellers = async (req, res) => {
+  try {
+    const search = String(req.query.search || "").trim();
+    const filter = { isActive: true };
+    if (search) {
+      const searchWords = search.split(/\s+/).filter(Boolean).map(escapeRegex);
+      filter.$and = searchWords.map((word) => ({
+        $or: [
+          { name: { $regex: word, $options: "i" } },
+          { description: { $regex: word, $options: "i" } },
+        ],
+      }));
+    }
+
+    const [products, soldItems] = await Promise.all([
+      Product.find(filter).populate("category", "name").lean(),
+      Order.aggregate([
+        { $match: { orderStatus: { $ne: "cancelled" } } },
+        { $unwind: "$items" },
+        { $group: { _id: "$items.product", soldQuantity: { $sum: "$items.quantity" } } },
+      ]),
+    ]);
+
+    const soldQuantityByProduct = new Map(
+      soldItems.map((item) => [String(item._id), item.soldQuantity]),
+    );
+    products.forEach((product) => {
+      product.soldQuantity = soldQuantityByProduct.get(String(product._id)) || 0;
+    });
+    products.sort((first, second) =>
+      second.soldQuantity - first.soldQuantity ||
+      new Date(second.createdAt) - new Date(first.createdAt),
+    );
+
+    res.json({ success: true, products });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Failed to fetch best sellers" });
   }
 };
 
@@ -159,4 +215,4 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-module.exports = { listProducts, getProduct, createProduct, updateProduct, deleteProduct };
+module.exports = { listProducts, listBestSellers, getProduct, createProduct, updateProduct, deleteProduct };

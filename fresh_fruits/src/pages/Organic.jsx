@@ -1,11 +1,14 @@
 
 import "../styles/Fruits.css";
+import { useSearchParams } from "react-router-dom";
 import { useProducts } from "../services/api";
 import { useCart } from "../context/CartContext";
 
 function Organic() {
+  const [searchParams] = useSearchParams();
   const { addToCart } = useCart();
-  const { products: organicProducts } = useProducts("organic");
+  const searchTerm = searchParams.get("search") || "";
+  const { products: organicProducts } = useProducts("organic", searchTerm);
 
   return (
     <main className="fruits-page">
@@ -15,6 +18,7 @@ function Organic() {
       </section>
 
       <section className="fruits-products">
+          {!organicProducts.length && <p>No organic products matched your search.</p>}
 
           {organicProducts.map((product) => (
             <div className="fruit-card" key={product.id}>

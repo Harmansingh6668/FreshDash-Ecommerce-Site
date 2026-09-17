@@ -1,10 +1,13 @@
 import "../styles/Fruits.css";
+import { useSearchParams } from "react-router-dom";
 import { useProducts } from "../services/api";
 import { useCart } from "../context/CartContext";
 
 function Vegetables() {
+  const [searchParams] = useSearchParams();
   const { addToCart } = useCart();
-  const { products: vegetableProducts, loading, error } = useProducts("vegetables");
+  const searchTerm = searchParams.get("search") || "";
+  const { products: vegetableProducts, loading, error } = useProducts("vegetables", searchTerm);
   return (
     <main className="fruits-page">
       <section className="fruits-header">

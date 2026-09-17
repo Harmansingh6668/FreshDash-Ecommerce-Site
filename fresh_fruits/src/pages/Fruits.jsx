@@ -1,10 +1,13 @@
 import "../styles/Fruits.css";
+import { useSearchParams } from "react-router-dom";
 import { useProducts } from "../services/api";
 import { useCart } from "../context/CartContext";
 
 function Fruits() {
+  const [searchParams] = useSearchParams();
   const { addToCart } = useCart();
-  const { products: fruitProducts } = useProducts("fruits");
+  const searchTerm = searchParams.get("search") || "";
+  const { products: fruitProducts } = useProducts("fruits", searchTerm);
 
   return (
     <main className="fruits-page">
@@ -17,6 +20,7 @@ function Fruits() {
 
       {/* Products */}
       <section className="fruits-products">
+        {!fruitProducts.length && <p>No fruits matched your search.</p>}
         {fruitProducts.map((product) => (
           <div className="fruit-card" key={product.id}>
             <div className="fruit-image">

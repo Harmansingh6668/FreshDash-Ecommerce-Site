@@ -57,8 +57,20 @@ function Header() {
 
   const handleSearch = (event) => {
     event.preventDefault();
+    const params = new URLSearchParams(location.search);
     const query = searchTerm.trim();
-    navigate(query ? `/?search=${encodeURIComponent(query)}` : "/");
+    if (query) params.set("search", query);
+    else params.delete("search");
+    navigate(`${location.pathname}${params.toString() ? `?${params}` : ""}`);
+  };
+
+  const handleSearchChange = (event) => {
+    const nextSearchTerm = event.target.value;
+    setSearchTerm(nextSearchTerm);
+    const params = new URLSearchParams(location.search);
+    if (nextSearchTerm.trim()) params.set("search", nextSearchTerm);
+    else params.delete("search");
+    navigate(`${location.pathname}${params.toString() ? `?${params}` : ""}`, { replace: true });
   };
 
   return (
@@ -151,7 +163,7 @@ function Header() {
 
         <Link to="/offers">Offers</Link>
 
-        <Link to="/offers">Best Sellers</Link>
+        <Link to="/best-sellers">Best Sellers</Link>
 
         <form className="search-box" onSubmit={handleSearch} role="search">
           <input
@@ -159,7 +171,7 @@ function Header() {
             placeholder="Search fruits, vegetables..."
             aria-label="Search products"
             value={searchTerm}
-            onChange={(event) => setSearchTerm(event.target.value)}
+            onChange={handleSearchChange}
           />
           <button type="submit" aria-label="Search">🔍</button>
         </form>

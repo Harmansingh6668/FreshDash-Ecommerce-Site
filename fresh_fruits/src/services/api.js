@@ -90,6 +90,43 @@ export function useProducts(filter = "all", search = "") {
   return { products, loading, error };
 }
 
+export function useBestSellers(search = "") {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    let active = true;
+    const params = new URLSearchParams();
+    if (search.trim()) params.set("search", search.trim());
+
+    fetch(`${API_URL}/products/bestsellers${params.toString() ? `?${params}` : ""}`)
+      .then(async (response) => {
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.message || "Failed to load best sellers");
+        return result.products.map(normalizeProduct);
+      })
+      .then((items) => {
+        if (active) {
+          setProducts(items);
+          setError("");
+        }
+      })
+      .catch((requestError) => {
+        if (active) setError(requestError.message);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [search]);
+
+  return { products, loading, error };
+}
+
 export async function getProduct(id) {
   const response = await fetch(`${API_URL}/products/${id}`);
   const result = await response.json();

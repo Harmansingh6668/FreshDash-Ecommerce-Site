@@ -1,10 +1,13 @@
 import "../styles/Fruits.css";
+import { useSearchParams } from "react-router-dom";
 import { useProducts } from "../services/api";
 import { useCart } from "../context/CartContext";
 
 function Leafygreen() {
+  const [searchParams] = useSearchParams();
   const { addToCart } = useCart();
-  const { products: leafyProducts } = useProducts("leafy_greens");
+  const searchTerm = searchParams.get("search") || "";
+  const { products: leafyProducts } = useProducts("leafy_greens", searchTerm);
 
   return (
     <main className="fruits-page">
@@ -14,6 +17,7 @@ function Leafygreen() {
       </section>
 
       <section className="fruits-products">
+        {!leafyProducts.length && <p>No leafy greens matched your search.</p>}
 
           {leafyProducts.map((product) => (
             <div className="fruit-card" key={product.id}>
