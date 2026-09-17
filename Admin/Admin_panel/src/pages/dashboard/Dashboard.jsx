@@ -98,10 +98,10 @@ function Dashboard() {
                   <td>₹{product.price}</td>
 
                   <td>
-                    {product.stock === 0 ? (
+                    {Number(product.stock) === 0 ? (
                       <span className="stock-out">Out of stock</span>
                     ) : (
-                      product.stock
+                      Number(product.stock)
                     )}
                   </td>
 

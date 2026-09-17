@@ -5,7 +5,7 @@ import Input from "../../Components/common/Input";
 import Select from "../../Components/common/Select";
 import Textarea from "../../Components/common/Textarea";
 import Button from "../../Components/common/Button";
-import { createProduct, getCategories, uploadProductImage } from "../../services/api";
+import { createProduct, getCategories, updateProduct, uploadProductImage } from "../../services/api";
 
 const compressImage = (file) =>
   new Promise((resolve, reject) => {
@@ -46,10 +46,10 @@ function ProductForm({ initialData = null, isEdit = false }) {
   const [formData, setFormData] = useState({
     name: initialData?.name || "",
     description: initialData?.description || "",
-    category: initialData?.category || "",
+    category: initialData?.category?._id || initialData?.category || "",
     price: initialData?.price || "",
     discountPrice: initialData?.discountPrice || "",
-    stock: initialData?.stock || "",
+    stock: initialData?.stock ?? "",
     status: initialData?.status || "published",
   });
 
@@ -63,7 +63,7 @@ function ProductForm({ initialData = null, isEdit = false }) {
     getCategories().then((result) =>
       setCategories(
         result.categories.map((category) => ({
-          value: category.name,
+          value: category._id,
           label: category.name,
         })),
       ),
@@ -120,7 +120,9 @@ function ProductForm({ initialData = null, isEdit = false }) {
       const savedImageUrl = image
         ? await uploadProductImage(await compressImage(image))
         : imageUrl;
-      await createProduct({ ...formData, name, description, price, stock, imageUrl: savedImageUrl });
+      const productData = { ...formData, name, description, price, stock, imageUrl: savedImageUrl };
+      if (isEdit) await updateProduct(initialData._id || initialData.id, productData);
+      else await createProduct(productData);
       navigate("/admin/products");
     } catch (requestError) {
       setError(requestError.message);

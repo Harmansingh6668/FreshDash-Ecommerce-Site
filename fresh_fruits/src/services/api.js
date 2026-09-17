@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const productRequests = new Map();
 
 const normalizeCategory = (value) => {
   const category = String(value || "")
@@ -42,7 +43,7 @@ const normalizeProduct = (product) => {
   };
 };
 
-export function useProducts(filter = "all") {
+export function useProducts(filter = "all", search = "") {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -50,25 +51,28 @@ export function useProducts(filter = "all") {
   useEffect(() => {
     let active = true;
 
-    fetch(`${API_URL}/products`)
-      .then(async (response) => {
-        const result = await response.json();
-        if (!response.ok) throw new Error(result.message || "Failed to load products");
-        return result.products.map(normalizeProduct);
-      })
+    const params = new URLSearchParams({ limit: filter === "all" ? "100" : "24" });
+    if (filter === "organic") params.set("organic", "true");
+    else if (filter === "offers") params.set("offers", "true");
+    else if (filter !== "all") params.set("category", filter);
+    if (search.trim()) params.set("search", search.trim());
+    const requestKey = params.toString();
+    if (!productRequests.has(requestKey)) {
+      productRequests.set(requestKey, fetch(`${API_URL}/products?${requestKey}`)
+        .then(async (response) => {
+          const result = await response.json();
+          if (!response.ok) throw new Error(result.message || "Failed to load products");
+          return result.products.map(normalizeProduct);
+        })
+        .catch((requestError) => {
+          productRequests.delete(requestKey);
+          throw requestError;
+        }));
+    }
+    productRequests.get(requestKey)
       .then((items) => {
         if (active) {
-          setProducts(
-            items.filter((item) =>
-              filter === "organic"
-                ? item.organic
-                : filter === "offers"
-                  ? item.discount_percent > 0
-                  : filter === "all"
-                    ? true
-                    : item.category === filter,
-            ),
-          );
+          setProducts(items);
         }
       })
       .catch((requestError) => {
@@ -81,7 +85,7 @@ export function useProducts(filter = "all") {
     return () => {
       active = false;
     };
-  }, [filter]);
+  }, [filter, search]);
 
   return { products, loading, error };
 }

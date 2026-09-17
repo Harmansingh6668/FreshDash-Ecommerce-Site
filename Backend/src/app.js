@@ -23,7 +23,7 @@ app.use(
   })
 );
 
-app.use(express.json({ limit: "10mb" }));
+app.use(express.json({ limit: "1mb" }));
 app.use(cookieParser());
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
@@ -42,5 +42,19 @@ app.use("/api/auth", authRoutes);
 app.use("/api/settings", settingRoutes);
 app.use("/api/uploads", uploadRoutes);
 app.use("/api/cart", cartRoutes);
+
+app.use((req, res) => {
+  res.status(404).json({ success: false, message: "Route not found" });
+});
+
+app.use((error, req, res, next) => {
+  if (res.headersSent) return next(error);
+  const status = error.statusCode || error.status || 500;
+  console.error("API request failed:", error.message);
+  res.status(status).json({
+    success: false,
+    message: status >= 500 ? "Internal server error" : error.message,
+  });
+});
 
 module.exports = app;

@@ -1,5 +1,16 @@
 const Product = require("../models/Product");
 const Category = require("../models/Category");
+const mongoose = require("mongoose");
+
+const resolveCategoryId = async (value) => {
+  const categoryValue = String(value || "").trim();
+  if (mongoose.isValidObjectId(categoryValue)) {
+    const category = await Category.findOne({ _id: categoryValue, isActive: true }).select("_id").lean();
+    return category?._id || null;
+  }
+  const category = await Category.findOne({ name: categoryValue.toLowerCase(), isActive: true }).select("_id").lean();
+  return category?._id || null;
+};
 
 const productPayload = (body) => ({
   name: body.name,
@@ -48,14 +59,36 @@ const listProducts = async (req, res) => {
     const filter = req.query.admin === "true"
       ? {}
       : { isActive: true };
-    if (req.query.category) filter.category = req.query.category;
+    if (req.query.category) {
+      const requestedCategory = String(req.query.category).trim().toLowerCase();
+      const categoryNames = {
+        fruit: ["fruit", "fruits"],
+        fruits: ["fruit", "fruits"],
+        vegetable: ["vegetable", "vegetables"],
+        vegetables: ["vegetable", "vegetables"],
+        leafy_green: ["leafy_green", "leafy_greens"],
+        leafy_greens: ["leafy_green", "leafy_greens"],
+      }[requestedCategory] || [requestedCategory];
+      const category = await Category.findOne({
+        name: { $in: categoryNames.map((name) => new RegExp(`^${name}$`, "i")) },
+        isActive: true,
+      }).select("_id").lean();
+      if (!category) return res.json({ success: true, products: [] });
+      filter.category = category._id;
+    }
     if (req.query.organic === "true") filter.organic = true;
     if (req.query.featured === "true") filter.featured = true;
-    if (req.query.search) filter.name = { $regex: req.query.search, $options: "i" };
+    if (req.query.offers === "true") filter.discountPrice = { $exists: true, $gt: 0 };
+    if (req.query.search) filter.$text = { $search: String(req.query.search).trim() };
+
+    const limit = Math.min(Math.max(Number.parseInt(req.query.limit, 10) || 24, 1), 100);
+    const skip = Math.max(Number.parseInt(req.query.skip, 10) || 0, 0);
 
     const query = Product.find(filter)
       .populate("category", "name")
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
 
     if (req.query.admin === "true") {
       query.select("name price discountPrice discountPercent category stock unit currency status isActive featured createdAt");
@@ -85,11 +118,8 @@ const createProduct = async (req, res) => {
     const validationError = validateProduct(req.body);
     if (validationError) return res.status(400).json({ success: false, message: validationError });
     const payload = productPayload(req.body);
-    if (!String(payload.category).match(/^[0-9a-fA-F]{24}$/)) {
-      const category = await Category.findOne({ name: payload.category });
-      if (!category) return res.status(400).json({ success: false, message: "Valid category is required" });
-      payload.category = category._id;
-    }
+    payload.category = await resolveCategoryId(payload.category);
+    if (!payload.category) return res.status(400).json({ success: false, message: "Valid category is required" });
     const product = await Product.create(payload);
     res.status(201).json({
       success: true,
@@ -108,7 +138,10 @@ const updateProduct = async (req, res) => {
   try {
     const validationError = validateProduct(req.body);
     if (validationError) return res.status(400).json({ success: false, message: validationError });
-    const product = await Product.findByIdAndUpdate(req.params.id, productPayload(req.body), { returnDocument: "after", runValidators: true });
+    const payload = productPayload(req.body);
+    payload.category = await resolveCategoryId(payload.category);
+    if (!payload.category) return res.status(400).json({ success: false, message: "Valid category is required" });
+    const product = await Product.findByIdAndUpdate(req.params.id, payload, { returnDocument: "after", runValidators: true });
     if (!product) return res.status(404).json({ success: false, message: "Product not found" });
     res.json({ success: true, product });
   } catch (error) {

@@ -26,15 +26,20 @@ const createSession = async (res, account, role, accountType) => {
 };
 
 const publicAccount = (account, role) => ({
-  id: account._id,
-  name: account.name,
-  email: account.email,
+  id: String(account._id),
+  name: account.name || "",
+  email: account.email || "",
   role,
   phone: account.phone || "",
   address: account.address || "",
   city: account.city || "",
   state: account.state || "",
   pincode: account.pincode || "",
+});
+
+const publicProfile = (account, role) => ({
+  ...publicAccount(account, role),
+  createdAt: account.createdAt,
 });
 
 const validateCredentials = (email, password) => {
@@ -110,7 +115,7 @@ const profile = async (req, res) => {
     const Account = ["admin", "superadmin"].includes(req.auth.role) ? Admin : User;
     const account = await Account.findById(req.auth.id).select("name email phone address city state pincode role createdAt");
     if (!account) return res.status(404).json({ success: false, message: "Account not found" });
-    res.json({ success: true, user: publicAccount(account, req.auth.role), profile: account });
+    res.json({ success: true, user: publicAccount(account, req.auth.role), profile: publicProfile(account, req.auth.role) });
   } catch (error) {
     res.status(500).json({ success: false, message: "Could not load profile" });
   }
@@ -133,7 +138,7 @@ const updateProfile = async (req, res) => {
       return res.status(400).json({ success: false, message: "Pincode must contain exactly 6 digits" });
     }
     const account = await Account.findByIdAndUpdate(req.auth.id, updates, { returnDocument: "after", runValidators: true });
-    res.json({ success: true, user: publicAccount(account, req.auth.role), profile: account });
+    res.json({ success: true, user: publicAccount(account, req.auth.role), profile: publicProfile(account, req.auth.role) });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }

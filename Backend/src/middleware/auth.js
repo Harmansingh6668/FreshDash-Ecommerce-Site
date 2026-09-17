@@ -9,9 +9,8 @@ const protect = async (req, res, next) => {
 
   try {
     const tokenHash = crypto.createHash("sha256").update(token).digest("hex");
-    const session = await Session.findOne({ tokenHash });
+    const session = await Session.findOne({ tokenHash }).select("userId role accountType expiresAt").lean();
     if (!session || session.expiresAt.getTime() <= Date.now()) {
-      if (session) await Session.deleteOne({ _id: session._id });
       res.clearCookie(SESSION_COOKIE);
       return res.status(401).json({ success: false, message: "Session expired" });
     }

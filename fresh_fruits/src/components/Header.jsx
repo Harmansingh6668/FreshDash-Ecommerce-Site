@@ -7,11 +7,10 @@ function Header() {
 
     const [showCategories, setShowCategories] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+    const [account, setAccount] = useState(() => JSON.parse(localStorage.getItem("userAccount") || "null"));
     const { cart } = useCart();
   const navigate = useNavigate();
   const location = useLocation();
-    const account = JSON.parse(localStorage.getItem("userAccount") || "null");
-
     const cartTotal = cart.reduce(
       (total, item) => total + Number(item.price) * item.quantity,
       0,
@@ -41,6 +40,20 @@ function Header() {
   useEffect(() => {
     setSearchTerm(new URLSearchParams(location.search).get("search") || "");
   }, [location.search]);
+
+  useEffect(() => {
+    const syncAccount = () => setAccount(JSON.parse(localStorage.getItem("userAccount") || "null"));
+    window.addEventListener("freshdash:account-updated", syncAccount);
+    window.addEventListener("freshdash:login", syncAccount);
+    window.addEventListener("freshdash:logout", syncAccount);
+    window.addEventListener("storage", syncAccount);
+    return () => {
+      window.removeEventListener("freshdash:account-updated", syncAccount);
+      window.removeEventListener("freshdash:login", syncAccount);
+      window.removeEventListener("freshdash:logout", syncAccount);
+      window.removeEventListener("storage", syncAccount);
+    };
+  }, []);
 
   const handleSearch = (event) => {
     event.preventDefault();

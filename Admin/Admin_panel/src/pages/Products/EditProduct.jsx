@@ -1,19 +1,18 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProductForm from "./ProductForm";
+import { getProduct } from "../../services/api";
 
 function EditProduct() {
   const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  const [error, setError] = useState("");
 
-  const product = {
-    id,
-    name: "Premium T-Shirt",
-    description: "Premium quality cotton t-shirt.",
-    category: "Clothing",
-    price: 999,
-    discountPrice: 899,
-    stock: 35,
-    status: "published",
-  };
+  useEffect(() => {
+    getProduct(id)
+      .then((result) => setProduct(result.product))
+      .catch((requestError) => setError(requestError.message));
+  }, [id]);
 
   return (
     <div>
@@ -24,7 +23,8 @@ function EditProduct() {
         </div>
       </div>
 
-      <ProductForm initialData={product} isEdit />
+      {error && <p role="alert">{error}</p>}
+      {product && <ProductForm initialData={product} isEdit />}
     </div>
   );
 }

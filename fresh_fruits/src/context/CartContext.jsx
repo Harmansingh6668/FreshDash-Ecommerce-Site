@@ -10,7 +10,8 @@ export function CartProvider({ children }) {
   const hydrated = useRef(false);
   const authenticated = useRef(false);
   const toastTimer = useRef(null);
-  const cartWrite = useRef(Promise.resolve());
+  const cartWriteTimer = useRef(null);
+  const pendingCart = useRef(null);
   const cartVersion = useRef(0);
 
   useEffect(() => {
@@ -20,6 +21,12 @@ export function CartProvider({ children }) {
       const localCart = JSON.parse(
         localStorage.getItem("guestCart") || "[]"
       );
+
+      if (!clearGuestCart && !localStorage.getItem("userAccount")) {
+        setCart(localCart);
+        hydrated.current = true;
+        return;
+      }
 
       if (clearGuestCart) {
         localStorage.removeItem("guestCart");
@@ -33,7 +40,7 @@ export function CartProvider({ children }) {
 
         authenticated.current = true;
         setCart(items);
-      } catch (error) {
+      } catch {
         if (requestVersion !== cartVersion.current) return;
 
         authenticated.current = false;
@@ -47,6 +54,8 @@ export function CartProvider({ children }) {
     const handleLogin = () => {
       cartVersion.current += 1;
       authenticated.current = false;
+      clearTimeout(cartWriteTimer.current);
+      pendingCart.current = null;
       hydrated.current = false;
 
       setCart([]);
@@ -75,6 +84,16 @@ export function CartProvider({ children }) {
   }, []);
 
   // Save cart
+  const queueCartSave = (items) => {
+    pendingCart.current = items;
+    clearTimeout(cartWriteTimer.current);
+    cartWriteTimer.current = setTimeout(() => {
+      const latestCart = pendingCart.current;
+      pendingCart.current = null;
+      if (latestCart && authenticated.current) saveCart(latestCart).catch(() => {});
+    }, 250);
+  };
+
   const persistCart = (updater) => {
     setCart((currentCart) => {
       const items =
@@ -87,9 +106,7 @@ export function CartProvider({ children }) {
 
       // Save logged-in cart to server
       if (hydrated.current && authenticated.current) {
-        cartWrite.current = cartWrite.current
-          .catch(() => {})
-          .then(() => saveCart(items));
+        queueCartSave(items);
       }
 
       return items;
@@ -186,7 +203,8 @@ export function CartProvider({ children }) {
     localStorage.removeItem("guestCart");
 
     if (authenticated.current) {
-      await cartWrite.current.catch(() => {});
+      clearTimeout(cartWriteTimer.current);
+      pendingCart.current = null;
       await clearSavedCart().catch(() => {});
     }
   };

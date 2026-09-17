@@ -6,14 +6,11 @@ import { useProducts } from "../services/api";
 import { useCart } from "../context/CartContext";
 
 function Home() {
-  const { products } = useProducts();
-  const { addToCart } = useCart();
   const [searchParams] = useSearchParams();
   const searchTerm = searchParams.get("search")?.trim().toLowerCase() || "";
-  const visibleProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchTerm),
-  );
-  const featuredProducts = (searchTerm ? visibleProducts : products).slice(0, 20);
+  const { products } = useProducts("all", searchTerm);
+  const { addToCart } = useCart();
+  const featuredProducts = products.slice(0, 20);
 
   return (
     <main className="home">
@@ -55,7 +52,7 @@ function Home() {
         <div className="product-list">
         {featuredProducts.map((product) => (
           <div className="product-card" key={product.id}>
-          <Link to={`/products/${product.id}`}> <div className="product-image"><img src={product.image_url} alt={product.name} /></div></Link>
+          <Link to={`/products/${product.id}`}> <div className="product-image"><img src={product.image_url} alt={product.name} loading="lazy" /></div></Link>
             <h3>{product.name}</h3>
             <p>₹{product.price.toFixed(2)} / {product.unit}</p>
             <button onClick={(event) => addToCart(product, 1, event.currentTarget)}>Add to Cart</button>

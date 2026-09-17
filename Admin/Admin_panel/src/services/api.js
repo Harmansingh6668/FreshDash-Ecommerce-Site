@@ -17,7 +17,17 @@ async function request(path, options = {}) {
 export const getCategories = (admin = false) => request(`/categories${admin ? "?admin=true" : ""}`);
 export const createCategory = (category) => request("/categories", { method: "POST", body: JSON.stringify(category) });
 export const deleteCategory = (id) => request(`/categories/${id}`, { method: "DELETE" });
-export const getProducts = (admin = false) => request(`/products${admin ? "?admin=true" : ""}`);
+export const getProducts = async (admin = false) => {
+  const result = await request(`/products${admin ? "?admin=true" : ""}`);
+  return {
+    ...result,
+    products: result.products.map((product) => ({
+      ...product,
+      stock: Number(product.stock ?? 0),
+    })),
+  };
+};
+export const getProduct = (id) => request(`/products/${id}`);
 export const createProduct = (product) => request("/products", { method: "POST", body: JSON.stringify(product) });
 export async function uploadProductImage(file) {
   const formData = new FormData();

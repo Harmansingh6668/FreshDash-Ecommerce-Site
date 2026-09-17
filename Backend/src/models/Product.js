@@ -59,6 +59,13 @@ const productSchema = new mongoose.Schema(
       },
     ],
 
+    stock: {
+      type: Number,
+      required: true,
+      min: 0,
+      default: 0,
+    },
+
     unit: {
       type: String,
       default: "piece",
@@ -99,5 +106,11 @@ const productSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+productSchema.index({ isActive: 1, createdAt: -1 });
+productSchema.index({ category: 1, isActive: 1, createdAt: -1 });
+productSchema.index({ organic: 1, isActive: 1, createdAt: -1 });
+productSchema.index({ featured: 1, isActive: 1, createdAt: -1 });
+productSchema.index({ name: "text", description: "text" });
 
 module.exports = mongoose.model("Product", productSchema);
