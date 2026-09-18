@@ -8,7 +8,7 @@ const { SESSION_COOKIE } = require("../middleware/auth");
 const SESSION_DURATION_MS = 2 * 60 * 60 * 1000;
 const sessionCookieOptions = {
   httpOnly: true,
-  sameSite: "lax",
+  sameSite: process.env.COOKIE_SAMESITE || "lax",
   secure: process.env.NODE_ENV === "production",
   maxAge: SESSION_DURATION_MS,
 };

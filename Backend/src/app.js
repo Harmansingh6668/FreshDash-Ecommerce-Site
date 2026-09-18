@@ -13,7 +13,7 @@ const path = require("path");
 
 const app = express();
 
-const allowedOrigins = [process.env.CLIENT_URL, process.env.ADMIN_URL]
+const allowedOrigins = [process.env.CLIENT_URL, process.env.ADMIN_URL, process.env.CORS_ORIGINS]
   .flatMap((value) => String(value || "").split(","))
   .map((value) => value.trim())
   .filter(Boolean);
