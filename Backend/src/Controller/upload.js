@@ -1,20 +1,8 @@
-const fs = require("fs");
-const path = require("path");
 const multer = require("multer");
-
-const uploadDirectory = path.join(__dirname, "../../uploads");
-fs.mkdirSync(uploadDirectory, { recursive: true });
-
-const storage = multer.diskStorage({
-  destination: uploadDirectory,
-  filename: (req, file, callback) => {
-    const extension = path.extname(file.originalname).toLowerCase();
-    callback(null, `product-${Date.now()}-${Math.round(Math.random() * 1e9)}${extension}`);
-  },
-});
+const cloudinary = require("../config/cloudinary");
 
 const upload = multer({
-  storage,
+  storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024 },
   fileFilter: (req, file, callback) => {
     if (!file.mimetype.startsWith("image/")) {
@@ -24,16 +12,34 @@ const upload = multer({
   },
 });
 
-const uploadProductImage = (req, res) => {
+const uploadProductImage = async (req, res, next) => {
   if (!req.file) {
     return res.status(400).json({ success: false, message: "Product image is required" });
   }
 
-  const baseUrl = `${req.protocol}://${req.get("host")}`;
-  res.status(201).json({
-    success: true,
-    imageUrl: `${baseUrl}/uploads/${req.file.filename}`,
-  });
+  try {
+    const result = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          folder: "fresh-fruits/products",
+          resource_type: "image",
+        },
+        (error, uploadedImage) => {
+          if (error) return reject(error);
+          resolve(uploadedImage);
+        },
+      );
+      stream.end(req.file.buffer);
+    });
+
+    res.status(201).json({
+      success: true,
+      imageUrl: result.secure_url,
+      publicId: result.public_id,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 module.exports = { upload, uploadProductImage };

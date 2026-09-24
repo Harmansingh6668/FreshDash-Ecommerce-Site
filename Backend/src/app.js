@@ -9,7 +9,6 @@ const authRoutes = require("./routes/authRoutes");
 const settingRoutes = require("./routes/settingRoutes");
 const uploadRoutes = require("./routes/uploadRoutes");
 const cartRoutes = require("./routes/cartRoutes");
-const path = require("path");
 
 const app = express();
 
@@ -32,7 +31,6 @@ app.use(
 
 app.use(express.json({ limit: "1mb" }));
 app.use(cookieParser());
-app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 app.get("/", (req, res) => {
   res.json({
@@ -41,7 +39,6 @@ app.get("/", (req, res) => {
   });
 });
 
-// Category routes
 app.use("/api/categories", categoryRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
